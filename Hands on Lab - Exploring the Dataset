@@ -1,0 +1,73 @@
+Lab: Exploring the Dataset
+Introduction¶
+Data exploration is the initial phase of data analysis where we aim to understand the data's characteristics, identify patterns, and uncover potential insights. It is a crucial step that helps us make informed decisions about subsequent analysis.
+
+Objectives
+After completing this lab, you will be able to:
+
+Summarize the key characteristics of a dataset.
+Identify different data types commonly used in data analysis.
+
+Install the required library
+import micropip
+
+await micropip.install('pandas')
+
+# Import pandas after installation
+import pandas as pd
+print(pd.__version__)
+
+<ipython-input-1-4a848102c67d>:6: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+2.2.0
+
+Load the dataset
+Read Data
+We utilize the pandas.read_csv() function for reading CSV files. However, in this version of the lab, which operates on JupyterLite, the dataset needs to be downloaded to the interface using the provided code below.
+
+The functions below will download the dataset into your browser:
+
+from pyodide.http import pyfetch
+import pandas as pd
+
+async def download(url, filename):
+    response = await pyfetch(url)
+    if response.status == 200:
+        with open(filename, "wb") as f:
+            f.write(await response.bytes())
+<ipython-input-2-079cd0c9f72b>:2: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+
+file_path = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/n01PQ9pSmiRX6520flujwQ/survey-data.csv"
+
+To obtain the dataset, utilize the download() function as defined above:
+
+await download(filename, 'survey-data.csv')
+
+filename="survey-data.csv"
+
+print("done") 
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+Cell In[2], line 1
+----> 1 await download(filename, 'survey-data.csv')
+      3 filename="survey-data.csv"
+      5 print("done") 
+
+NameError: name 'download' is not defined
+
+
+Utilize the Pandas method read_csv() to load the data into a dataframe.
+df = pd.read_csv(dataset_url)
